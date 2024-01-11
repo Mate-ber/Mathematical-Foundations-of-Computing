@@ -2,9 +2,7 @@
 #define pb push_back
 using namespace std;
 void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
-	
-	
-	
+
 	for(int i=0; i<n; i++){
 		for(int j=0; j<n; j++){
 			for(int h=0; h<n; h++){
@@ -24,8 +22,6 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 		
 	}
 	
-	
-	
 	double x[n];
 	for(int i=n-1; i>=0; i--){
 		int sum=0;
@@ -39,16 +35,7 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 	}
 	cout<<endl;
 	
-	
-	
 }
-//void generate(){
-//	int MM=100;
-//	int n;
-//	for(int i=0; i<MM; i++)n=rand()%MM;
-//	
-//	
-//}
 int main(){
 
 	cout<<setprecision(1)<<fixed;
