@@ -19,14 +19,14 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 			}
 		}
 		
-		for(int j=0; j<n; j++){
-			for(int h=0; h<n; h++){
-				cout<<v[j][h]<<" ";
-			}
-			cout<<b[j];
-			cout<<endl;
-		}
-		cout<<"-----"<<endl;
+//		for(int j=0; j<n; j++){
+//			for(int h=0; h<n; h++){
+//				cout<<v[j][h]<<" ";
+//			}
+//			cout<<b[j];
+//			cout<<endl;
+//		}
+//		cout<<"-----"<<endl;
 		
 		for(int j=i+1; j<n; j++){
 			double div=v[j][i]/v[i][i];
@@ -83,24 +83,21 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 		}
 	}
 	else{
+		
+		vector<int> error;
 		for(int i=0; i<n; i++){
 			int k=bb[i];
 			for(int j=0; j<n; j++){
 				k-=x[j]*mat[i][j];
 			}
-			cout<<k<<" "<<bb[i]<<endl;
-			if(abs(k)>eps){
-				cor=false;
-				break;
-			}
+		
+			error.pb(k);
 		}
 		
-		if(!cor){
-			cout<<"Not correct"<<endl;
+		for(auto x:error){
+			cout<<x<<" ";
 		}
-		else{
-			cout<<"Correct"<<endl;
-		}
+		cout<<endl;
 	}
 	
 	
