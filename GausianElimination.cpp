@@ -99,12 +99,11 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 }
 void generate(){
 	
-	int MM=20,p=5,coef=10;
+	int MM=10,p=5,coef=10;
 	
 	for(int i=0; i<MM; i++)n=rand()%MM;
 	
 	vector<double> pas;
-	
 	for(int i=0; i<n; i++){
 		int xux=1;
 		for(int j=0; j<5; j++){
@@ -115,7 +114,7 @@ void generate(){
 	}
 	mat.resize(n);
 	
-	bool hilbert=false;
+	bool hilbert=true;
 	if(!hilbert){
 		for(int i=0; i<n; i++){
 			for(int j=0; j<n;  j++){
