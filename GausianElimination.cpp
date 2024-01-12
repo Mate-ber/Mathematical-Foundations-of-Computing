@@ -61,11 +61,13 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 	cout<<endl;
 	bool cor=true;
 	if(!intpas.empty()){
+		double sum_error=0.0;
 		for(int i=0; i<n; i++){
 			if(fabs(x[i]-intpas[i])>eps){
 				cout<<x[i]<<"<-error here "<<intpas[i]<<endl;
 				cor=false;
 			}
+			sum_error+=fabs(x[i]-intpas[i]);
 		}
 		cout<<endl;
 		
@@ -76,6 +78,8 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 		else{
 			cout<<"Correct"<<endl;
 		}
+		cout<<"Sum of error: "<<sum_error<<endl;
+		return;
 	}
 	
 	vector<double> error;
@@ -87,22 +91,20 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 		error.pb(k);
 	}
 	
-	double sum_error=0;
+	double sum_error=0.0;
 	for(auto x:error){
 		sum_error+=fabs(x);
 	}
 	cout<<setprecision(9)<<fixed;
-	cout<<"sum of error is:" <<sum_error<<endl;
-	
-	
+	cout<<"Sum of error:" <<sum_error<<endl;
 	
 }
 void generate(){
 	
-	int MM=10,p=5,coef=10;
+	int MM=100,p=5,coef=10;
 	
 	for(int i=0; i<MM; i++)n=rand()%MM;
-	
+	n=19;
 	vector<double> pas;
 	for(int i=0; i<n; i++){
 		int xux=1;
