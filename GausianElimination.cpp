@@ -19,14 +19,14 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 			}
 		}
 		
-		for(int j=0; j<n; j++){
-			for(int h=0; h<n; h++){
-				cout<<v[j][h]<<" ";
-			}
-			cout<<b[j];
-			cout<<endl;
-		}
-		cout<<"-----"<<endl;
+//		for(int j=0; j<n; j++){
+//			for(int h=0; h<n; h++){
+//				cout<<v[j][h]<<" ";
+//			}
+//			cout<<b[j];
+//			cout<<endl;
+//		}
+//		cout<<"-----"<<endl;
 		
 		for(int j=i+1; j<n; j++){
 			double div=v[j][i]/v[i][i];
@@ -82,23 +82,19 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 			cout<<"Correct"<<endl;
 		}
 	}
-	else{
-		
-		vector<int> error;
-		for(int i=0; i<n; i++){
-			int k=bb[i];
-			for(int j=0; j<n; j++){
-				k-=x[j]*mat[i][j];
-			}
-		
-			error.pb(k);
+	vector<double> error;
+	for(int i=0; i<n; i++){
+		double k=bb[i];
+		for(int j=0; j<n; j++){
+			k-=x[j]*mat[i][j];
 		}
-		
-		for(auto x:error){
-			cout<<x<<" ";
-		}
-		cout<<endl;
+		error.pb(k);
 	}
+	int sum_error=0;
+	for(auto x:error){
+		sum_error+=x;
+	}
+	cout<<"sum of error is:" <<sum_error<<endl;
 	
 	
 	
