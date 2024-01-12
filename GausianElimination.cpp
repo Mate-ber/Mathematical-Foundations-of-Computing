@@ -2,8 +2,10 @@
 #define pb push_back
 using namespace std;
 int n;
+const double eps=1e-2;
 vector<vector<double> > mat(1000);
 vector<double> bb;
+vector<double> intpas;
 void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 	
 	for(int i=0; i<n; i++){
@@ -45,15 +47,20 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 		
 		x[i]=(b[i]-sum)/v[i][i];
 	}
+	cout<<"Answers: "<<endl;
 	for(int i=0; i<n; i++){
 		cout<<x[i]<<" ";
+		if(x[i]>intpas[i]+eps || x[i]<intpas[i]-eps){
+			cout<<"<-error here "<<intpas[i]<<endl;
+			break;
+		}
 	}
 	cout<<endl;
 	
 }
 void generate(){
 	
-	int MM=10,p=10,coef=10;
+	int MM=100,p=10,coef=10;
 	
 	for(int i=0; i<MM; i++)n=rand()%MM;
 	
@@ -65,6 +72,7 @@ void generate(){
 			xux=rand()%p;
 		}
 		pas.pb(xux);
+		intpas.pb(xux);
 	}
 	mat.resize(n);
 	
