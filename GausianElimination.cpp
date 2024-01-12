@@ -19,14 +19,14 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 			}
 		}
 		
-//		for(int j=0; j<n; j++){
-//			for(int h=0; h<n; h++){
-//				cout<<v[j][h]<<" ";
-//			}
-//			cout<<b[j];
-//			cout<<endl;
-//		}
-//		cout<<"-----"<<endl;
+		for(int j=0; j<n; j++){
+			for(int h=0; h<n; h++){
+				cout<<v[j][h]<<" ";
+			}
+			cout<<b[j];
+			cout<<endl;
+		}
+		cout<<"-----"<<endl;
 		
 		for(int j=i+1; j<n; j++){
 			double div=v[j][i]/v[i][i];
