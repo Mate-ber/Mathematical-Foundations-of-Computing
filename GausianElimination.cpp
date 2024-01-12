@@ -73,33 +73,42 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 			}
 		}
 		cout<<endl;
-	}
-	
-	if(!cor){
-		cout<<"Not correct"<<endl;
-		return;
-	}
-	
-	for(int i=0; i<n; i++){
-		int k=bb[i];
-		for(int j=0; j<n; j++){
-			k-=x[j]*mat[i][j];
+		
+		
+		if(!cor){
+			cout<<"Not correct"<<endl;
 		}
-		if(abs(k)>eps){
-			cor=false;
-			break;
+		else{
+			cout<<"Correct"<<endl;
 		}
-	}
-	if(!cor){
-		cout<<"Not correct"<<endl;
 	}
 	else{
-		cout<<"Correct"<<endl;
+		for(int i=0; i<n; i++){
+			int k=bb[i];
+			for(int j=0; j<n; j++){
+				k-=x[j]*mat[i][j];
+			}
+			cout<<k<<" "<<bb[i]<<endl;
+			if(abs(k)>eps){
+				cor=false;
+				break;
+			}
+		}
+		
+		if(!cor){
+			cout<<"Not correct"<<endl;
+		}
+		else{
+			cout<<"Correct"<<endl;
+		}
 	}
+	
+	
+	
 }
 void generate(){
 	
-	int MM=10,p=10,coef=10;
+	int MM=100,p=10,coef=10;
 	
 	for(int i=0; i<MM; i++)n=rand()%MM;
 	
@@ -153,7 +162,7 @@ void generate(){
 int main(){
 
 	cout<<setprecision(2)<<fixed;
-//	generate();
+	generate();
 	if(n==0){
 		cin>>n;
 		mat.resize(n);
