@@ -62,7 +62,7 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 	if(!intpas.empty()){
 		for(int i=0; i<n; i++){
 			if(x[i]>intpas[i]+eps || x[i]<intpas[i]-eps){
-				cout<<"<-error here "<<intpas[i]<<endl;
+				cout<<x[i]<<"<-error here "<<intpas[i]<<endl;
 				cor=false;
 				break;
 			}
@@ -96,7 +96,7 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 }
 void generate(){
 	
-	int MM=100,p=10,coef=10;
+	int MM=10,p=5,coef=10;
 	
 	for(int i=0; i<MM; i++)n=rand()%MM;
 	
@@ -112,19 +112,30 @@ void generate(){
 	}
 	mat.resize(n);
 	
-	for(int i=0; i<n; i++){
-		for(int j=0; j<n;  j++){
-			int xux;int cc=2*coef;
-			for(int h=0; h<5; h++){
-				xux=rand()%cc;
+	bool hilbert=true;
+	if(!hilbert){
+		for(int i=0; i<n; i++){
+			for(int j=0; j<n;  j++){
+				double xux;int cc=2*coef;
+				for(int h=0; h<5; h++){
+					xux=rand()%cc;
+				}
+				mat[i].pb(xux-coef);
 			}
-			mat[i].pb(xux-coef);
 		}
+	}
+	else{
+		for(int i=0; i<n; i++){
+			for(int j=0; j<n; j++){
+				double xux=i+j+2.0;
+				xux=1/xux;
+				mat[i].pb(xux);
+			}
+		}	
 	}
 	
 	for(int i=0; i<n; i++){
-		int sum=0;
-		
+		double sum=0;
 		for(int j=0; j<n; j++){
 			sum+=mat[i][j]*pas[j];
 		}
