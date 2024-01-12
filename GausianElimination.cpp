@@ -30,6 +30,10 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 		
 		for(int j=i+1; j<n; j++){
 			double div=v[j][i]/v[i][i];
+			if(abs(v[i][i])<=eps){
+				cout<<"Error"<<endl;
+				return;
+			}
 			for(int h=i; h<n; h++){
 				v[j][h]-=div*v[i][h];
 			}
@@ -45,22 +49,57 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 			sum+=x[j]*v[i][j];
 		}
 		
+		if(abs(v[i][i])<=eps){
+			cout<<"Error"<<endl;
+			return;
+		}
+			
 		x[i]=(b[i]-sum)/v[i][i];
+		
 	}
+	
 	cout<<"Answers: "<<endl;
 	for(int i=0; i<n; i++){
 		cout<<x[i]<<" ";
-		if(x[i]>intpas[i]+eps || x[i]<intpas[i]-eps){
-			cout<<"<-error here "<<intpas[i]<<endl;
+	}
+	cout<<endl;
+	bool cor=true;
+	if(!intpas.empty()){
+		for(int i=0; i<n; i++){
+			if(x[i]>intpas[i]+eps || x[i]<intpas[i]-eps){
+				cout<<"<-error here "<<intpas[i]<<endl;
+				cor=false;
+				break;
+			}
+		}
+		cout<<endl;
+	}
+	
+	if(!cor){
+		cout<<"Not correct"<<endl;
+		return;
+	}
+	
+	for(int i=0; i<n; i++){
+		int k=bb[i];
+		for(int j=0; j<n; j++){
+			k-=x[j]*mat[i][j];
+		}
+		if(abs(k)>eps){
+			cor=false;
 			break;
 		}
 	}
-	cout<<endl;
-	
+	if(!cor){
+		cout<<"Not correct"<<endl;
+	}
+	else{
+		cout<<"Correct"<<endl;
+	}
 }
 void generate(){
 	
-	int MM=100,p=10,coef=10;
+	int MM=10,p=10,coef=10;
 	
 	for(int i=0; i<MM; i++)n=rand()%MM;
 	
@@ -114,7 +153,24 @@ void generate(){
 int main(){
 
 	cout<<setprecision(2)<<fixed;
-	generate();
+//	generate();
+	if(n==0){
+		cin>>n;
+		mat.resize(n);
+		for(int i=0; i<n; i++){
+			for(int j=0; j<n; j++){
+				int x;
+				cin>>x;
+				mat[i].pb(x);
+			}
+		}
+		for(int i=0; i<n; i++){
+			int x;
+			cin>>x;
+			bb.pb(x);
+		}
+		
+	}
 	
 	vector<vector<double> > v(n);
 	vector<double> b(n);	
