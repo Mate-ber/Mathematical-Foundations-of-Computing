@@ -118,7 +118,6 @@ void generate(){
 			for(int h=0; h<5; h++){
 				xux=rand()%cc;
 			}
-			if(xux==coef)xux++;
 			mat[i].pb(xux-coef);
 		}
 	}
