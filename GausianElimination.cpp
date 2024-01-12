@@ -19,21 +19,21 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 			}
 		}
 		
-//		for(int j=0; j<n; j++){
-//			for(int h=0; h<n; h++){
-//				cout<<v[j][h]<<" ";
-//			}
-//			cout<<b[j];
-//			cout<<endl;
-//		}
-//		cout<<"-----"<<endl;
+		for(int j=0; j<n; j++){
+			for(int h=0; h<n; h++){
+				cout<<v[j][h]<<" ";
+			}
+			cout<<b[j];
+			cout<<endl;
+		}
+		cout<<"-----"<<endl;
 		
 		for(int j=i+1; j<n; j++){
-			double div=v[j][i]/v[i][i];
-			if(abs(v[i][i])<=eps){
-				cout<<"Error"<<endl;
+			if(!v[i][i]){
+				cout<<"Invalid Matrix"<<endl;
 				return;
 			}
+			double div=v[j][i]/v[i][i];
 			for(int h=i; h<n; h++){
 				v[j][h]-=div*v[i][h];
 			}
@@ -49,11 +49,6 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 			sum+=x[j]*v[i][j];
 		}
 		
-		if(abs(v[i][i])<=eps){
-			cout<<"Error"<<endl;
-			return;
-		}
-			
 		x[i]=(b[i]-sum)/v[i][i];
 		
 	}
