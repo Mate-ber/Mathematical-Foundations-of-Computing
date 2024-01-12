@@ -1,8 +1,9 @@
 #include<bits/stdc++.h>
 #define pb push_back
+#define double long double
 using namespace std;
 int n;
-const double eps=1e-2;
+const double eps=1e-4;
 vector<vector<double> > mat(1000);
 vector<double> bb;
 vector<double> intpas;
@@ -77,6 +78,7 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 			cout<<"Correct"<<endl;
 		}
 	}
+	
 	vector<double> error;
 	for(int i=0; i<n; i++){
 		double k=bb[i];
@@ -85,10 +87,11 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 		}
 		error.pb(k);
 	}
-	int sum_error=0;
+	double sum_error=0;
 	for(auto x:error){
 		sum_error+=x;
 	}
+	cout<<setprecision(9)<<fixed;
 	cout<<"sum of error is:" <<sum_error<<endl;
 	
 	
