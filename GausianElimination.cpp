@@ -3,7 +3,7 @@
 #define double long double
 using namespace std;
 int n;
-const double eps=1e-4;
+const double eps=1e-3;
 vector<vector<double> > mat(1000);
 vector<double> bb;
 vector<double> intpas;
@@ -62,10 +62,9 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 	bool cor=true;
 	if(!intpas.empty()){
 		for(int i=0; i<n; i++){
-			if(x[i]>intpas[i]+eps || x[i]<intpas[i]-eps){
+			if(fabs(x[i]-intpas[i])>eps){
 				cout<<x[i]<<"<-error here "<<intpas[i]<<endl;
 				cor=false;
-				break;
 			}
 		}
 		cout<<endl;
@@ -87,9 +86,10 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 		}
 		error.pb(k);
 	}
+	
 	double sum_error=0;
 	for(auto x:error){
-		sum_error+=x;
+		sum_error+=fabs(x);
 	}
 	cout<<setprecision(9)<<fixed;
 	cout<<"sum of error is:" <<sum_error<<endl;
@@ -99,7 +99,7 @@ void solveNdim(vector<vector<double> > &v, int n, vector<double> &b){
 }
 void generate(){
 	
-	int MM=10,p=5,coef=10;
+	int MM=20,p=5,coef=10;
 	
 	for(int i=0; i<MM; i++)n=rand()%MM;
 	
@@ -115,7 +115,7 @@ void generate(){
 	}
 	mat.resize(n);
 	
-	bool hilbert=true;
+	bool hilbert=false;
 	if(!hilbert){
 		for(int i=0; i<n; i++){
 			for(int j=0; j<n;  j++){
@@ -162,7 +162,7 @@ void generate(){
 }
 int main(){
 
-	cout<<setprecision(2)<<fixed;
+	cout<<setprecision(4)<<fixed;
 	generate();
 	if(n==0){
 		cin>>n;
