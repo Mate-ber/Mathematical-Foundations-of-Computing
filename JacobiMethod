@@ -1,0 +1,128 @@
+#include<bits/stdc++.h>
+#define double long double
+#define pb push_back
+using namespace std;
+const double eps=1e-9;
+vector<double> g_pas;
+vector<double> next_g;
+vector<double> b;
+vector<vector<double> > mat(1000);
+//int c=0;
+int n;
+
+bool check(){
+	double error=0.0;
+	for(int i=0; i<n; i++){
+		double cur=(g_pas[i]-next_g[i]);
+		error+=(cur*cur);
+	}
+	error=sqrtl(error);
+	if(error<=eps)return true;
+	return false;
+}
+
+void jacobi(){
+//	c++;
+	next_g.clear();
+	for(int i=0; i<n; i++){
+		double sum=0;
+		for(int j=0; j<n; j++){
+			if(i!=j){
+				sum+=mat[i][j]*g_pas[j];
+			}
+		}
+		sum=b[i]-sum;
+		sum/=mat[i][i];
+		next_g.pb(sum);
+	}	
+	if(check()){
+//		for(int i=0; i<n; i++){
+//			cout<<next_g[i]<<" ";
+//		}
+//		cout<<endl;
+		double error_sum=0;
+		for(int i=0; i<n; i++){
+			double error_cur=0;
+			for(int j=0; j<n; j++){
+				error_cur+=mat[i][j]*next_g[j];
+			}
+			error_cur=b[i]-error_cur;
+			error_sum+=error_cur;
+		}
+//		cout<<error_sum<<endl;
+		return;
+	}
+	g_pas=next_g;
+	jacobi();
+}
+
+void generate(){
+	int pas=10,bb=50,a=10;
+	g_pas.clear();
+	for(int i=0; i<n; i++){
+		double cur=0;
+		for(int j=0; j<10; j++){
+			cur=rand()%pas;
+		}
+		g_pas.pb(cur);
+	}
+	mat.resize(n);
+	for(int i=0; i<n; i++){
+		mat[i].clear();
+	}
+	vector<double> diagonal;
+	for(int i=0; i<n; i++){
+		double sum=0;
+		for(int j=0; j<n; j++){
+			if(i!=j){
+//				double cur=rand()%(2*a);
+//				cur-=a;
+				double cur=rand()%a;
+				mat[i].pb(cur);
+				sum+=fabs(cur);
+			}
+			else{
+				mat[i].pb(0);
+			}
+		}
+		diagonal.pb(sum);
+	}
+	for(int i=0; i<n; i++){
+		int add=5;
+		mat[i][i]=diagonal[i]+rand()%add;
+		mat[i][i]*=3;
+	}
+	b.clear();
+	for(int i=0; i<n; i++){
+		double cur=0;
+		for(int j=0; j<10; j++){
+			cur=rand()%bb;
+		}
+		b.pb(cur);
+	}
+//	for(int i=0; i<n; i++){
+//		for(int j=0; j<n; j++){
+//			cout<<mat[i][j]<<" ";
+//		}
+//		cout<<b[i]<<endl;
+//	}
+//	cout<<"---------"<<endl;
+//	for(int i=0; i<n; i++){
+//		cout<<g_pas[i]<<" ";
+//	}cout<<endl<<"---------"<<endl;
+}
+int main(){
+	
+	cout<<setprecision(9)<<fixed;
+	for(int i=3; i<1000; i++){
+		n=i;
+		generate();
+		auto start_time = std::chrono::high_resolution_clock::now();
+		jacobi();
+	//	cout<<c<<endl;
+		auto end_time = std::chrono::high_resolution_clock::now();
+	   	auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);	
+	   	double time=(double)(elapsed_time.count())/1000.0;
+	   	cout<<n<<" "<<time<<endl;
+	}
+}
