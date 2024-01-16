@@ -1,0 +1,78 @@
+#include<bits/stdc++.h>
+#define double long double
+#define pb push_back
+#define F first
+#define S second
+using namespace std;
+
+vector<double> x;
+vector<double> y;
+vector<pair<double,double> > g;
+int n;
+int m;
+
+double f(double cur){
+	double res=1;
+	double sum=0;
+	for(int z=0; z<n; z++){
+		res=1;
+		for(int j=0; j<n; j++){
+			if(z!=j){
+				res*=(cur-x[j])/(x[z]-x[j]);
+			}
+		}
+		res*=y[z];
+		sum+=res;
+	}
+	return sum;
+}
+
+void generate(){
+	int xx=10,yy=10,gg=10;
+	ifstream cin;
+	cin.open("cor.txt");
+	for(int i=0; i<n; i++){
+		double cur=0;
+//		for(int j=0; j<10; j++) cur=(float)rand()/RAND_MAX*2 - 1;
+		cin>>cur;
+		x.pb(cur);
+	}
+	for(int i=0; i<n; i++){
+		double cur=0;
+//		for(int j=0; j<10; j++)cur=(float)rand()/RAND_MAX*5;
+		cin>>cur;
+		y.pb(cur);
+	}
+	
+	for(int i=0; i<m; i++){
+		double res=1;
+		double cur=-1+(2.0/(float)(m))*(i)-0.1;
+		double sum=f(cur);
+		g.pb({cur,sum});
+	}
+//	for(auto cor:x){
+//		cout<<cor<<" ";
+//	}
+//	cout<<endl;
+//	for(auto cor:y){
+//		cout<<cor<<" ";
+//	}
+//	cout<<endl;
+    ofstream cout;
+    cout.open ("data1.txt");
+	for(int i=0; i<g.size(); i++){
+		cout<<g[i].F<<" "<<g[i].S<<endl;
+	}
+
+}
+int main(){
+	
+	cout<<setprecision(9)<<fixed;
+	m = 100;
+	n=10;
+	generate();
+}
+/*
+1.000000000 6.000000000 5.000000000
+14.000000000 8.000000000 18.000000000
+*/
