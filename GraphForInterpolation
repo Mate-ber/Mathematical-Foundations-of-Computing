@@ -1,0 +1,36 @@
+import matplotlib.pyplot as plt
+
+def polynomial(x, coefficients):
+    degree = len(coefficients) - 1
+    y = sum(c * (x ** (i)) for i, c in enumerate(coefficients))
+    print(x,y)
+    return y
+
+def plot_graph(x, y, label):
+    plt.plot(x, y, marker='o', linestyle='-', label=label)
+
+# Read data from text file
+with open('data.txt', 'r') as file:
+    lines = file.readlines()
+    x_values = [float(val) for val in lines[0].split()]
+    y_values = [float(val) for val in lines[1].split()]
+    coefficients = [float(val) for val in lines[2].split()]
+
+
+new_x = []
+new_y = []
+for i in range(-10, 20):
+    x_values.append(i)
+    new_x.append(i)
+    new_y.append(polynomial(i, coefficients))
+
+
+
+plot_graph(new_x, new_y, label='Polynomial')
+
+plt.xlabel('x-axis')
+plt.ylabel('y-axis')
+plt.title('Polynomial Graph')
+plt.legend()
+
+plt.show()
