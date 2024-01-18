@@ -1,0 +1,99 @@
+#include<bits/stdc++.h>
+#define pb push_back
+#define F first
+#define S second
+using namespace std;
+vector<pair<double,double> > cor;
+vector<vector<double> > mat(1000);
+int n;
+double pp(double x,int p){
+	double poww=1;
+	for(int i=0; i<p; i++){
+		poww*=x;
+	}
+	return poww;
+}
+void solve(){
+	vector<double> h;
+	for(int i=0; i<n-1; i++){
+		h.pb(cor[i+1].F-cor[i].F);
+	}
+	
+	vector<double> alp;
+	alp.pb(0);
+	for(int i=1; i<n-1; i++){
+		alp.pb(3*(cor[i+1].S-cor[i].S)/h[i]-3*(cor[i].S-cor[i-1].S)/h[i-1]);
+	}
+	
+	vector<double> c(n,0),l(n,0),mu(n,0),z(n,0),b(n-1,0),d(n-1,0);
+	l[0]=0;
+	for(int i=1; i<n-1; i++){
+		l[i]=2*(cor[i+1].F-cor[i-1].F)-h[i-1]*mu[i-1];
+		mu[i]=h[i]/l[i];
+		z[i]=(alp[i]-h[i-1]*z[i-1])/l[i];
+	}
+	l[n-1]=1;
+	c[n-1]=0;
+	z[n-1]=0;
+	
+	for(int i=n-2; i>=0; i--){
+		c[i]=z[i]-mu[i]*c[i+1];
+		b[i]=(cor[i+1].S-cor[i].S)/h[i]-h[i]*(c[i+1]+2*c[i])/3;
+		d[i]=((c[i+1]-c[i])/3)/h[i];
+	}
+	for(int i=0; i<n-1; i++){
+		mat[i][1]=b[i];
+		mat[i][2]=c[i];
+		mat[i][3]=d[i];
+	}
+    ofstream cout;
+    cout.open ("data1.txt");
+//	for(int i=0; i<n-1; i++){
+//		for(int j=0; j<4; j++){
+//			cout<<mat[i][j]<<" ";
+//		}
+//		cout<<cor[i].F<<endl;
+//	}
+	for(int j=0; j<4; j++){
+		for(int i=0; i<n-1; i++){
+			cout<<mat[i][j]<<" ";
+		}
+		cout<<endl;
+	}
+	for(int i=0; i<n; i++){
+		cout<<cor[i].F<<" ";
+	}cout<<endl;
+}
+void clean(){
+	cor.clear();
+	for(int i=0; i<n; i++){
+		mat[i].clear();
+	}
+}
+void generate(){
+	mat.resize(n);
+	clean();
+	for(int i=0; i<n; i++){
+//		double gen_x=((3.0)/double(n))*(i);
+//		double gen_y=((4.0)/double(n))*(i)+(i+1)*5-0.5+i;
+		double gen_x=i;
+		double gen_y=(i+1)*(i+1);
+		cor.pb({gen_x,gen_y});	
+	}
+//	for(auto x: cor){
+//		cout<<x.F<<" "<<x.S<<endl;
+//	}
+	for(int i=0; i<n; i++){
+		for(int j=0; j<4; j++){
+			mat[i].pb(-1);
+		}
+		mat[i][0]=cor[i].S;
+	}
+	mat[0][2]=0;
+	mat[n-1][2]=0;
+}
+int main(){
+	n=5;
+	generate();
+	solve();
+}
