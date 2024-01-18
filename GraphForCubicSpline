@@ -1,0 +1,39 @@
+import matplotlib.pyplot as plt
+
+def polynomial(x, a, b, c, d):
+    y = a + b*x + c*x*x + d*x*x*x
+    return y
+
+def plot_graph(x, y, label):
+    plt.plot(x, y, marker='o', linestyle='-', label=label)
+
+
+with open('data1.txt', 'r') as file:
+    lines = file.readlines()
+    a = [float(val) for val in lines[0].split()]
+    b = [float(val) for val in lines[1].split()]
+    c = [float(val) for val in lines[2].split()]
+    d = [float(val) for val in lines[3].split()]
+    x = [float(val) for val in lines[4].split()]
+
+new_x = []
+new_y = []
+
+for cor in range(0,40):
+    xx = cor/10
+    new_x.append(xx)
+    for j in range(len(x)-1):
+        if(xx>=x[j] and xx<=x[j+1]):
+            yy = polynomial(xx, a[j], b[j], c[j], d[j])
+            new_y.append(yy)
+            break
+
+
+plot_graph(new_x, new_y, label='cubic spline')
+
+plt.xlabel('x-axis')
+plt.ylabel('y-axis')
+plt.title('Polynomial Graph')
+plt.legend()
+
+plt.show()
