@@ -1,0 +1,22 @@
+import matplotlib.pyplot as plt
+
+
+with open('data1.txt', 'r') as file:
+    lines = file.readlines()
+    x = [float(val) for val in lines[0].split()]
+    y = [float(val) for val in lines[1].split()]
+    c = [float(val) for val in lines[2].split()]
+xx=[]
+yy=[]
+for i in range(0, 330):
+    xx.append(i/100)
+    yy.append(c[0]+c[1]*(i/100))
+
+plt.plot(xx, yy, marker='o', linestyle='-', label='graph')
+plt.plot(x, y, color='yellow', marker='o', label='Points')
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
+plt.title('Scatter Plot of Points')
+
+plt.legend()
+plt.show()
