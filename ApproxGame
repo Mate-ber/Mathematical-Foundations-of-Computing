@@ -1,0 +1,134 @@
+#include<bits/stdc++.h>
+#define pb push_back
+using namespace std;
+int n,m;
+vector<double> coef;
+vector<double> x;
+vector<double> y;
+vector<double> g;
+vector<double> d;
+vector<vector<double> > A(1000);
+vector<vector<double> > AT(1000);
+vector<vector<double> > AM(1000);
+vector<double> r_side;
+
+
+void solve(){
+	//A
+	for(int i=0; i<n-1; i++){
+		double cur_x=2*(x[i+1]-x[0]),cur_y=2*(y[i+1]-y[0]);
+		A[i].pb(cur_x);A[i].pb(cur_y);
+	}
+	//
+	
+	//AT
+	for(int i=0; i<m; i++){
+		for(int j=0; j<n-1; j++){
+			AT[i].pb(A[j][i]);
+		}
+	}
+	//
+	
+	
+	//A*AT
+	for(int i=0; i<m; i++){
+		for(int j=0; j<m; j++){
+			double add=0;
+			for(int z=0; z<n-1; z++){
+				double cur=AT[i][z]*A[z][j];
+				add+=cur;
+			}
+			AM[i].pb(add);
+		}
+	}
+	//
+	
+	vector<double> b;
+	//create y
+	for(int i=1; i<n; i++){
+		double cur=d[0]*d[0]-d[i]*d[i]-x[0]*x[0]+x[i]*x[i]-y[0]*y[0]+y[i]*y[i];
+		b.pb(cur);
+	}
+	//
+	
+	
+	//AT*y
+	for(int i=0; i<m; i++){
+		double add=0; 
+		for(int j=0; j<n-1; j++){
+			double cur=AT[i][j]*b[j];
+			add+=cur;
+		}
+		r_side.pb(add);
+	}
+	//
+	
+	
+	//Gaussian
+	for(int i=0; i<m; i++){
+		if(AM[i][i]==0){
+			for(int j=i+1; j<m; j++){
+				if(AM[j][i]){
+					swap(AM[i],AM[j]);
+					swap(r_side[i],r_side[j]);
+					break;
+				}
+			}
+		}
+		for(int j=i+1; j<m; j++){
+			double div=AM[j][i]/AM[i][i];
+			for(int h=i; h<m; h++){
+				AM[j][h]-=div*AM[i][h];
+			}
+			r_side[j]-=r_side[i]*div;
+		}
+	}
+	
+	cout<<setprecision(9)<<fixed;
+	vector<double> x(m,0);
+	for(int i=m-1; i>=0; i--){
+		double sum=0;
+		for(int j=m-1; j>i; j--){
+			sum+=x[j]*AM[i][j];
+		}
+		x[i]=(r_side[i]-sum)/AM[i][i];
+	}
+	for(int i=0; i<m; i++)coef.pb(x[i]);
+	//
+	
+	
+	//    ofstream cout;
+	//    cout.open("data1.txt");
+	for(int i=0; i<m; i++){
+		cout<<coef[i]<<" ";
+	}
+	cout<<endl;
+}
+void generate(){
+	x.clear();
+	y.clear();
+	coef.clear();
+	A.resize(n-1);
+	AT.resize(m);
+	AM.resize(m);
+	
+   ifstream cin;
+   cin.open("cor.txt");
+   
+	for(int i=0; i<n; i++){
+		double xx,yy,dd;
+		cin>>xx>>yy>>dd;
+		x.pb(xx);
+	//	cout<<xx<<" "<<xx+1<<endl;
+		y.pb(yy);
+		d.pb(dd);
+	//	cout<<yy<<" "<<yy+1<<endl;
+	}
+}
+int main(){
+	n=10;
+	m=2;
+	cout<<setprecision(3)<<fixed;
+	generate();
+	solve();
+}
