@@ -22,11 +22,10 @@ c = read_data(file_path1)
 print(x)
 print(y)
 
-plt.scatter(x, y, label='Data Points')
-plt.scatter(c[0], c[1], color='red', label='Calculated Point (c[0], c[1])')
+plt.scatter(x, y, label='x,y')
+plt.scatter(c[0], c[1], color='red', label='approx')
 
 plt.xlabel('X-axis')
 plt.ylabel('Y-axis')
-plt.title('Scatter Plot with Calculated Point')
 plt.legend()
 plt.show()
