@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+#define pb push_back
+using namespace std;
+const double alp=1.0;
+const double beta=0.1;
+const double delta=0.075;
+const double gamma=1.5;
+
+vector<double> x;
+vector<double> y;
+double dt=0.01;
+int n;
+
+void solve(){
+	x.pb(100);
+	y.pb(10);
+	for(int i=1; i<n; i++){
+		double xi,yi;
+		double xl=x.back(),yl=y.back();
+		xi=alp*xl-beta*xl*yl;
+		yi=delta*xl*yl-gamma*yl;
+		x.pb(xi*dt+xl);
+		y.pb(yi*dt+yl);
+	}
+	    ofstream cout;
+	    cout.open("data.txt");
+	for(auto xx:x){
+		cout<<xx<<" ";
+	}cout<<endl;
+	for(auto yy:y){
+		cout<<yy<<" ";
+	}cout<<endl;
+}
+
+int main(){
+	n=1000;
+	solve();	
+}
